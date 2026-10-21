@@ -106,9 +106,12 @@
     .snip + .attr { display:block; margin-top:.7em; font-family:'JetBrains Mono',monospace; font-size:.5em; color:var(--muted); }
     .checklist { list-style:none; margin:0; padding:0; }
     .checklist li { font-size:.62em; color:var(--ink); line-height:1.3; margin:.5em 0; padding-left:1.5em; position:relative; }
-    .checklist li::before { content:"☐"; position:absolute; left:0; color:var(--accent); font-size:1.1em; }
+    .checklist li::before { content:""; position:absolute; left:0; top:.12em; width:1em; height:1em; background:var(--accent);
+                             -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/></svg>") center/contain no-repeat;
+                             mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/></svg>") center/contain no-repeat; }
     .checklist li.done { color:var(--muted); text-decoration:line-through; }
-    .checklist li.done::before { content:"☑"; text-decoration:none; }
+    .checklist li.done::before { -webkit-mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='m8 12.5 2.5 2.5 5.5-5.5'/></svg>");
+                                  mask-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'/><path d='m8 12.5 2.5 2.5 5.5-5.5'/></svg>"); }
     .pills { display:flex; flex-wrap:wrap; gap:.4em; }
     .pills .p { font-family:'Schibsted Grotesk',sans-serif; font-weight:500; font-size:.56em; color:var(--accent);
                 background:var(--blue-wash); border:1px solid var(--accent); border-radius:.4em; padding:.3em .7em; }
@@ -118,9 +121,41 @@
                  border-radius:.4em; padding:.4em .7em; }
     .qchips .q b { color:var(--accent); font-weight:600; }
 
+    /* /translate — a cover that re-renders itself in each community language */
+    .langdemo { display:grid; grid-template-columns:auto 1fr; gap:1.5em; align-items:center; justify-content:center; padding:0 1em; }
+    .langdemo .stack { display:flex; justify-content:center; }
+    .lcov { position:relative; width:172px; height:258px; border-radius:3px; background:var(--accent); overflow:hidden;
+            box-shadow:0 10px 24px -10px rgba(43,39,29,.45); }
+    .lcov::before { content:""; position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,.22), rgba(0,0,0,0) 7%); }
+    .lcov .t { position:absolute; left:18px; right:16px; top:20px; font-family:'Literata',serif; font-optical-sizing:none;
+               font-size:25px; line-height:1.18; font-weight:500; color:var(--bg); text-wrap:balance; }
+    .lcov .a { position:absolute; left:18px; right:16px; bottom:16px; font-family:'JetBrains Mono',monospace; font-size:10px;
+               letter-spacing:.08em; text-transform:uppercase; color:var(--bg); opacity:.72; }
+    .langdemo .swap.in { animation:lswap .55s cubic-bezier(.2,.7,.2,1) both; }
+    @keyframes lswap { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+    .llist { position:relative; height:272px; overflow:hidden;
+             -webkit-mask-image:linear-gradient(transparent, #000 5%, #000 70%, transparent);
+             mask-image:linear-gradient(transparent, #000 5%, #000 70%, transparent); }
+    .llist ul { list-style:none; margin:0; padding:0; position:absolute; left:0; right:0; top:12px; /* active row sits level with the cover's title */
+                transition:transform .55s cubic-bezier(.2,.7,.2,1); will-change:transform; }
+    .llist li { height:58px; line-height:58px; font-size:36px; color:var(--muted); white-space:nowrap; padding-left:.75em;
+                position:relative; transition:color .35s, font-weight .35s; }
+    .llist li.on { color:var(--accent); font-weight:600; }
+    .llist li.on::before { content:""; position:absolute; left:0; top:50%; width:9px; height:9px; margin-top:-4.5px;
+                           border-radius:50%; background:var(--accent); }
+    @media (prefers-reduced-motion: reduce) { .llist ul, .llist li { transition:none; } .langdemo .swap.in { animation:none; } }
+
     /* close / references */
     .refs { font-size:.64em; line-height:2.05; }
     .refs .lab { color:var(--muted); display:inline-block; min-width:8.5em; }
+
+    /* Lucide icons (same set openlibrary.org vendors: 24-grid, 2px stroke, currentColor) */
+    .ic { display:inline-block; width:1em; height:1em; vertical-align:-.12em; fill:none; stroke:currentColor;
+          stroke-width:2; stroke-linecap:round; stroke-linejoin:round; color:var(--accent); flex:none; }
+    .reveal h1 .ic, .reveal h2 .ic { width:.92em; height:.92em; margin-right:.22em; vertical-align:-.08em; }
+    .principle h4 .ic { width:.95em; height:.95em; margin-right:.3em; vertical-align:-.1em; }
+    .unit .ui .ic, .feat .fi .ic { vertical-align:top; }
+    .attr .ic { width:1.1em; height:1.1em; vertical-align:-.2em; }
 
     /* opener — floating field of Open Library covers (1920x1080 stage scaled to the 1280x720 deck) */
     .reveal section.every { height:720px; padding:0; overflow:visible; }
@@ -177,13 +212,13 @@
     <h2>What's New</h2>
     <div class="principles">
       <div class="principle">
-        <h4>📱 Mobile UX &amp; Design</h4>
+        <h4><svg class="ic ic-smartphone" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>Mobile UX &amp; Design</h4>
         <p>A mobile-first way to search, browse the stacks, and act on any book.</p></div>
       <div class="principle">
-        <h4>📚 Lenny &amp; Lending</h4>
+        <h4><svg class="ic ic-book-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Lenny &amp; Lending</h4>
         <p>A dependable book provider, so readers can borrow and read with confidence.</p></div>
       <div class="principle">
-        <h4>🤝 Participation</h4>
+        <h4><svg class="ic ic-handshake" viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>Participation</h4>
         <p>Snippets, micro-tasks, translations, lists, and tags — everyone contributes.</p></div>
     </div>
     <aside class="notes">
@@ -198,17 +233,17 @@
   <!-- 4 · MOBILE UX & DESIGN -->
   <section data-background-color="#f1ede0">
     <p class="step">1 / 3 · Better UX</p>
-    <h2>📱 Mobile UX &amp; Design</h2>
+    <h2><svg class="ic ic-smartphone" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>Mobile UX &amp; Design</h2>
     <p class="sub" style="font-size:.76em; max-width:66ch; margin-top:-.1em;">
       A mobile-first redesign of how you find a book and what you can do with it.</p>
     <div class="units">
-      <div class="unit"><div class="ui">🔎</div>
+      <div class="unit"><div class="ui"><svg class="ic ic-search" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
         <h4>New Search UX</h4>
         <p>Faster, clearer results that work thumb-first — the fastest path from a question to a book.</p></div>
-      <div class="unit"><div class="ui">📚</div>
+      <div class="unit"><div class="ui"><svg class="ic ic-library-big" viewBox="0 0 24 24" aria-hidden="true"><rect width="8" height="18" x="3" y="3" rx="1"/><path d="M7 3v18"/><path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z"/></svg></div>
         <h4>Browse the Stacks</h4>
         <p>A new homepage that lets you wander the shelves and discover, not just query a search box.</p></div>
-      <div class="unit"><div class="ui">⚡</div>
+      <div class="unit"><div class="ui"><svg class="ic ic-bookmark" viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></div>
         <h4>Shelf Actions</h4>
         <p>Want to read, already read, add to a list — one tap from anywhere a book shows up.</p></div>
     </div>
@@ -224,7 +259,7 @@
   <!-- 5 · LENNY / LENDING (video demo) -->
   <section data-background-color="#f1ede0">
     <p class="step">2 / 3 · More ways to read</p>
-    <h2>📚 Lenny: A Trusted Book Provider</h2>
+    <h2><svg class="ic ic-book-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Lenny: A Trusted Book Provider</h2>
     <div class="two">
       <div>
         <p class="lede">Find a book, connect to <em>Lenny for Libraries</em>, and start reading —
@@ -253,24 +288,24 @@
   <!-- 6 · TOOLS FOR PARTICIPATION (overview) -->
   <section data-background-color="#f1ede0">
     <p class="step">3 / 3 · More ways to participate</p>
-    <h2>🤝 Tools for Participation</h2>
+    <h2><svg class="ic ic-handshake" viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>Tools for Participation</h2>
     <p class="sub" style="font-size:.76em; max-width:70ch; margin-top:-.1em;">
       Five ways the community builds Open Library alongside us — each a small, low-friction way to
       contribute.</p>
     <div class="feats">
-      <div class="feat"><span class="fi">✂️</span>
+      <div class="feat"><span class="fi"><svg class="ic ic-share-2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg></span>
         <h4>Share Snippets</h4>
         <p>Highlight a passage in BookReader and share it — every snippet flows into a global feed.</p></div>
-      <div class="feat"><span class="fi">✅</span>
+      <div class="feat"><span class="fi"><svg class="ic ic-circle-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5 5.5-5.5"/></svg></span>
         <h4>Librarian <span class="tag">/tasks</span></h4>
         <p>A dashboard of bite-size micro-tasks — anyone can pick one up and improve the catalog.</p></div>
-      <div class="feat"><span class="fi">🌐</span>
+      <div class="feat"><span class="fi"><svg class="ic ic-globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
         <h4><span class="tag">/translate</span></h4>
         <p>A community translations dashboard — help read Open Library in your language.</p></div>
-      <div class="feat"><span class="fi">📑</span>
+      <div class="feat"><span class="fi"><svg class="ic ic-list-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg></span>
         <h4>Shelf Actions &amp; Lists</h4>
         <p>Build and share curated book lists in a couple of taps.</p></div>
-      <div class="feat"><span class="fi">🏷️</span>
+      <div class="feat"><span class="fi"><svg class="ic ic-tag" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span>
         <h4>Tag Books</h4>
         <p>Add genres and types in the UI — powering “Find a book by / with / that…”.</p></div>
     </div>
@@ -284,7 +319,7 @@
   <!-- 7 · FEATURE · SHARE SNIPPETS -->
   <section data-background-color="#f1ede0">
     <p class="step">Participate · 1 / 5</p>
-    <h2>✂️ Share Snippets</h2>
+    <h2><svg class="ic ic-share-2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>Share Snippets</h2>
     <div class="two detail">
       <div>
         <p class="lede">Found a passage worth sharing? Highlight it right in BookReader and post it —
@@ -298,7 +333,7 @@
       <div class="spotlight">
         <p class="sh">Shared to the feed</p>
         <p class="snip">Hi, I'm Olive. My cat Henry is my best friend. I saw a shooting star…</p>
-        <span class="attr">— Catboy · shared by @reader · ♥ 42</span>
+        <span class="attr">— Catboy · shared by @reader · <svg class="ic ic-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> 42</span>
       </div>
     </div>
     <aside class="notes">
@@ -312,7 +347,7 @@
   <!-- 8 · FEATURE · LIBRARIAN /tasks -->
   <section data-background-color="#f1ede0">
     <p class="step">Participate · 2 / 5</p>
-    <h2>✅ Librarian <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/tasks</span></h2>
+    <h2><svg class="ic ic-circle-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5 5.5-5.5"/></svg>Librarian <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/tasks</span></h2>
     <div class="two detail">
       <div>
         <p class="lede">Improving the catalog used to mean knowing where to start. Now it's a to-do
@@ -345,7 +380,7 @@
   <!-- 9 · FEATURE · /translate -->
   <section data-background-color="#f1ede0">
     <p class="step">Participate · 3 / 5</p>
-    <h2>🌐 <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/translate</span></h2>
+    <h2><svg class="ic ic-globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/translate</span></h2>
     <div class="two detail">
       <div>
         <p class="lede">Open Library should read naturally in your language — and the community is what
@@ -357,28 +392,26 @@
         </ul>
         <p class="path" style="margin-top:.9em;"><a href="https://openlibrary.org/translate">openlibrary.org/translate</a></p>
       </div>
-      <div class="spotlight">
-        <p class="sh">Community languages</p>
-        <div class="pills">
-          <span class="p">English</span><span class="p">Español</span><span class="p">Français</span>
-          <span class="p">Deutsch</span><span class="p">हिन्दी</span><span class="p">中文</span>
-          <span class="p">العربية</span><span class="p">Português</span><span class="p">日本語</span>
-          <span class="p">Italiano</span><span class="p">+ more</span>
+      <div class="langdemo">
+        <div class="stack">
+          <div class="lcov"><span class="t swap" dir="auto">The Little Prince</span><span class="a">Saint-Exupéry</span></div>
         </div>
+        <div class="llist"><ul></ul></div>
       </div>
     </div>
     <aside class="notes">
       Community translations. Open Library should read naturally in your language, and the community
       drives that through a single translations dashboard — translate a string, a language lead reviews
-      it, and it ships. It's already live across roughly two dozen languages, and any reader can add
-      theirs.
+      it, and it ships. What you're watching on the right is the same book re-rendered in each
+      language our community has translated. It's already live across roughly two dozen languages, and
+      any reader can add theirs.
     </aside>
   </section>
 
   <!-- 10 · FEATURE · SHELF ACTIONS & LISTS -->
   <section data-background-color="#f1ede0">
     <p class="step">Participate · 4 / 5</p>
-    <h2>📑 Shelf Actions &amp; Lists</h2>
+    <h2><svg class="ic ic-list-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg>Shelf Actions &amp; Lists</h2>
     <div class="two detail">
       <div>
         <p class="lede">Your shelves, your lists — built in a couple of taps, and easy to share.</p>
@@ -402,7 +435,7 @@
   <!-- 11 · FEATURE · TAG BOOKS -->
   <section data-background-color="#f1ede0">
     <p class="step">Participate · 5 / 5</p>
-    <h2>🏷️ Tag Books</h2>
+    <h2><svg class="ic ic-tag" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>Tag Books</h2>
     <div class="two detail">
       <div>
         <p class="lede">Add genres and types right in the UI — and unlock a whole new way to find
@@ -432,7 +465,7 @@
 
   <!-- 12 · CLOSE -->
   <section data-background-color="#f1ede0">
-    <h1 style="font-size:1.7em;">📖 Everyone's Open Library.</h1>
+    <h1 style="font-size:1.7em;"><svg class="ic ic-book-open-text" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v16"/><path d="M16 13h2"/><path d="M16 9h2"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/><path d="M6 13h2"/><path d="M6 9h2"/></svg>Everyone's Open Library.</h1>
     <p class="sub" style="font-size:.82em; max-width:56ch; margin-top:.6em;">
       Read a book, share a snippet, tag a genre, translate a string, pick up a task. Come build the
       library with us.</p>
@@ -574,6 +607,59 @@
     Reveal.on('slidechanged', e => { if (e.currentSlide === sec) enter(); else if (e.previousSlide === sec) leave(); });
     Reveal.on('fragmentshown', e => { if (e.fragment.closest('section') === sec) exit(); });
     Reveal.on('fragmenthidden', e => { if (e.fragment.closest('section') === sec && phase !== 'enter') enter(); });
+  })();
+</script>
+<script>
+  // Slide 9 — /translate: the same book re-rendered in each community language.
+  (function () {
+    const sec = document.querySelector('.langdemo').closest('section');
+    const title = sec.querySelector('.lcov .t'), ul = sec.querySelector('.llist ul');
+    const L = [
+      ['English','The Little Prince'],
+      ['Español','El principito'],
+      ['Français','Le Petit Prince'],
+      ['Deutsch','Der kleine Prinz'],
+      ['हिन्दी','छोटा राजकुमार'],
+      ['中文','小王子'],
+      ['العربية','الأمير الصغير'],
+      ['Português','O Pequeno Príncipe'],
+      ['日本語','星の王子さま'],
+      ['Italiano','Il piccolo principe'],
+      ['Polski','Mały Książę'],
+      ['한국어','어린 왕자'],
+      ['Türkçe','Küçük Prens'],
+      ['Українська','Маленький принц'],
+      ['Bahasa Indonesia','Pangeran Kecil'],
+      ['Čeština','Malý princ'],
+      ['Русский','Маленький принц'],
+      ['Tagalog','Ang Munting Prinsipe'],
+      ['Hrvatski','Mali princ'],
+      ['Română','Micul prinț'],
+      ['Azərbaycanca','Balaca şahzadə'],
+      ['Sardu','Su Printzipeddu']
+    ];
+    const N = L.length, ROW = 58, HOLD = 1500;
+    // Two copies of the list so the scroll can wrap without a visible jump.
+    ul.innerHTML = L.concat(L).map(l => '<li>' + l[0] + '</li>').join('');
+    const lis = ul.children;
+    let i = 0, timer = 0;
+    function swap(el, text) { el.classList.remove('in'); el.textContent = text; void el.offsetWidth; el.classList.add('in'); }
+    function show(k, animate) {
+      ul.style.transition = animate ? '' : 'none';
+      ul.style.transform = 'translateY(' + (-(k * ROW)) + 'px)';
+      for (let j = 0; j < lis.length; j++) lis[j].classList.toggle('on', j === k);
+      swap(title, L[k % N][1]);
+    }
+    function tick() {
+      i++;
+      if (i === N + 1) { show(1, false); i = 1; }   // snap from the copy back to the original, invisibly
+      show(i, true);
+    }
+    function start() { stop(); show(i, false); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(tick, HOLD); }
+    function stop() { clearInterval(timer); timer = 0; }
+    show(0, false);
+    Reveal.on('ready', () => { if (Reveal.getCurrentSlide() === sec) start(); });
+    Reveal.on('slidechanged', e => { if (e.currentSlide === sec) start(); else if (e.previousSlide === sec) stop(); });
   })();
 </script>
 </body>
