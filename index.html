@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tools for Participation</title>
+
+  <link rel="stylesheet" href="reveal.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400..700&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Open Library palette — sampled from the brand banner */
+      --bg:#f1ede0;        /* cream */
+      --bg2:#f1ede0;       /* lighter panel bg */
+      --card:#fbf8ef;      /* near-white card */
+      --ink:#2b271d;       /* warm near-black (the serif LIBRARY) */
+      --muted:#6f6653;
+      --accent:#2f6aa8;    /* Open Library blue (the OPEN sign), text-safe */
+      --accent2:#5289c1;   /* OL sign blue, lighter — decorative */
+      --line:#d2caae;
+      --blue-wash:#e3edf7; /* pale blue fill */
+      --green:#5a8a3f;
+      --green-wash:#e6efd9;
+    }
+    .reveal { font-family:'Schibsted Grotesk',system-ui,sans-serif; font-size:33px; color:var(--ink); }
+    .reveal .slides { text-align:left; }
+    .reveal section { line-height:1.34; }
+    html, body { background:var(--bg); }
+    .reveal h1,.reveal h2,.reveal h3 {
+      font-family:'Literata',Georgia,serif; font-weight:700; font-optical-sizing:none; color:var(--ink);
+      text-transform:none; letter-spacing:-0.01em; line-height:1.07; margin:0 0 .45em;
+    }
+    .reveal h1 { font-size:2.1em; }
+    .reveal h2 { font-size:1.45em; }
+    .reveal strong { color:var(--accent); font-weight:600; }
+    .reveal em { color:var(--accent); font-style:normal; font-weight:500; }
+    .reveal a { color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(47,106,168,.4); }
+    .reveal ul { margin-left:.1em; }
+    .reveal li { margin:.32em 0; }
+    .reveal .muted { color:var(--muted); }
+
+    .kicker { color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:.5em; letter-spacing:.22em; text-transform:uppercase; margin-bottom:.4em; }
+    .step { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:.52em; color:var(--accent);
+            letter-spacing:.16em; text-transform:uppercase; border:1px solid var(--line); border-radius:2em; padding:.25em 1em; margin-bottom:.7em; }
+    .colhdr { font-family:'JetBrains Mono',monospace; font-size:.5em; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:.4em; }
+    .sub { color:var(--muted); font-size:.82em; max-width:52ch; }
+    .path { font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.74em; }
+
+    /* three-up pillars */
+    .principles { display:grid; grid-template-columns:repeat(3,1fr); gap:.75em; margin-top:.85em; }
+    .principle { background:var(--card); border:1px solid var(--line);
+                 border-radius:.6em; padding:.95em 1em 1.05em; box-shadow:0 1px 0 rgba(43,39,29,.04); }
+    .principle .n { font-family:'JetBrains Mono',monospace; font-size:.52em; color:var(--accent);
+                    letter-spacing:.14em; text-transform:uppercase; white-space:nowrap; }
+    .reveal h4,.snip,.qchips .q { font-optical-sizing:none; }
+    .principle h4 { font-family:'Literata',serif; font-size:1.02em; color:var(--ink); margin:.12em 0 .35em; font-weight:700; }
+    .principle p { margin:0; font-size:.64em; color:var(--muted); line-height:1.42; }
+
+    /* uniform units (3-up) */
+    .units { display:grid; grid-template-columns:repeat(3,1fr); gap:.7em; margin-top:.75em; }
+    .unit { background:var(--card); border:1px solid var(--line);
+            border-radius:.6em; padding:.9em .95em 1em; display:flex; flex-direction:column; }
+    .unit .ui { font-size:1.5em; line-height:1; margin-bottom:.15em; }
+    .unit h4 { font-family:'Literata',serif; font-size:.98em; color:var(--ink); margin:0 0 .3em; font-weight:700; }
+    .unit p { margin:0; font-size:.6em; color:var(--muted); line-height:1.45; flex:1 1 auto; }
+
+    /* participation features — flex wrap, 3 then 2 centered */
+    .feats { display:flex; flex-wrap:wrap; gap:.6em; justify-content:center; margin-top:.7em; }
+    .feat { flex:0 0 calc((100% - 1.2em) / 3); box-sizing:border-box; background:var(--card);
+            border:1px solid var(--line); border-radius:.6em; padding:.7em .8em .8em; }
+    .feat .fi { font-size:1.25em; line-height:1; }
+    .feat h4 { font-family:'Literata',serif; font-size:.82em; color:var(--ink); margin:.18em 0 .25em; font-weight:700; }
+    .feat h4 .tag { font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.86em; font-weight:500; }
+    .feat p { margin:0; font-size:.52em; color:var(--muted); line-height:1.42; }
+
+    /* two-column (demo / detail) */
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:1.3em; align-items:center; margin-top:.4em; }
+    .two.detail { grid-template-columns:1.02fr .98fr; align-items:center; }
+    .lede { font-size:.82em; color:var(--ink); line-height:1.45; margin:0 0 .6em; max-width:34ch; }
+    .pts { list-style:none; margin:.2em 0 0; padding:0; }
+    .pts li { font-size:.64em; color:var(--muted); line-height:1.4; margin:.4em 0; padding-left:1.3em; position:relative; }
+    .pts li::before { content:"→"; position:absolute; left:0; color:var(--accent); font-weight:700; }
+    .pts li b { color:var(--ink); font-weight:600; }
+
+    /* video demo */
+    .demo { border:1px solid var(--line); border-radius:.7em; overflow:hidden; background:#000;
+            box-shadow:0 6px 22px rgba(43,39,29,.14); }
+    .demo video { display:block; width:100%; height:auto; }
+    .demo .cap { background:var(--card); color:var(--accent); font-family:'JetBrains Mono',monospace;
+                 font-size:.46em; letter-spacing:.07em; text-transform:uppercase; padding:.45em .7em; border-top:1px solid var(--line); }
+
+    /* screenshot (transparent PNG with its own shadow) */
+    .shot img { display:block; width:100%; height:auto; max-height:470px; object-fit:contain; }
+
+    /* right-side spotlight mock */
+    .spotlight { background:var(--card); border:1px solid var(--line);
+                 border-radius:.7em; padding:1em 1.1em 1.1em; box-shadow:0 2px 10px rgba(43,39,29,.06); }
+    .spotlight .sh { font-family:'JetBrains Mono',monospace; font-size:.48em; letter-spacing:.12em;
+                     text-transform:uppercase; color:var(--accent); margin-bottom:.6em; }
+    .snip { font-family:'Literata',serif; font-size:.82em; color:var(--ink); line-height:1.5; margin:0; }
+    .snip::before { content:"\201C"; }
+    .snip::after { content:"\201D"; }
+    .snip + .attr { display:block; margin-top:.7em; font-family:'JetBrains Mono',monospace; font-size:.5em; color:var(--muted); }
+    .checklist { list-style:none; margin:0; padding:0; }
+    .checklist li { font-size:.62em; color:var(--ink); line-height:1.3; margin:.5em 0; padding-left:1.5em; position:relative; }
+    .checklist li::before { content:"☐"; position:absolute; left:0; color:var(--accent); font-size:1.1em; }
+    .checklist li.done { color:var(--muted); text-decoration:line-through; }
+    .checklist li.done::before { content:"☑"; text-decoration:none; }
+    .pills { display:flex; flex-wrap:wrap; gap:.4em; }
+    .pills .p { font-family:'Schibsted Grotesk',sans-serif; font-weight:500; font-size:.56em; color:var(--accent);
+                background:var(--blue-wash); border:1px solid var(--accent); border-radius:.4em; padding:.3em .7em; }
+    .qchips { display:flex; flex-direction:column; gap:.5em; }
+    .qchips .q { font-family:'Literata',serif; font-size:.78em; color:var(--ink);
+                 background:var(--blue-wash); border:1px solid var(--line); border-left:3px solid var(--accent);
+                 border-radius:.4em; padding:.4em .7em; }
+    .qchips .q b { color:var(--accent); font-weight:600; }
+
+    /* close / references */
+    .refs { font-size:.64em; line-height:2.05; }
+    .refs .lab { color:var(--muted); display:inline-block; min-width:8.5em; }
+
+    /* opener — floating field of Open Library covers (1920x1080 stage scaled to the 1280x720 deck) */
+    .reveal section.every { height:720px; padding:0; overflow:visible; }
+    .every .stage { position:absolute; left:50%; top:50%; width:1920px; height:1080px; margin:-540px 0 0 -960px; transform:scale(.6667); }
+    .every .cov { position:absolute; width:112px; height:168px; border-radius:3px; overflow:hidden; opacity:0;
+                  box-shadow:0 10px 24px -10px rgba(43,39,29,.45); will-change:transform,opacity; }
+    .every .cov span { position:absolute; inset:12px; font-family:'Literata',serif; font-size:22px; line-height:1.2; font-weight:500; color:var(--bg); }
+    .every .cov img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+    .every .tag { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; will-change:transform,opacity; }
+    .every .tag::before { content:""; position:absolute; inset:0;
+                          background:radial-gradient(ellipse 860px 340px at 50% 50%, var(--bg) 32%, color-mix(in srgb, var(--bg) 86%, transparent) 62%, transparent 100%); }
+    .reveal .every h1 { position:relative; margin:0; max-width:1240px; text-align:center; font-size:104px; line-height:1.12;
+                        letter-spacing:-.015em; text-wrap:balance; }
+
+    .reveal .slide-number { background:transparent; color:var(--muted); font-family:'JetBrains Mono',monospace; }
+  </style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+  <!-- 1 · EVERY BOOK (opener) -->
+  <!-- data-formation: grid | diagonal | wave. Press → once to play the exit, again to advance. -->
+  <section class="every" data-background-color="#f1ede0" data-formation="grid">
+    <div class="stage">
+      <div class="field"></div>
+      <div class="tag"><h1>Open Library</h1></div>
+    </div>
+    <span class="fragment" aria-hidden="true"></span>
+    <aside class="notes">
+      Before any of the new stuff, this is the whole idea in one line. Open Library is a wiki catalog
+      for every book ever published — one page per book, that anyone can edit. Every cover floating
+      behind me is a page someone made better. Keep that in mind, because everything I show you this
+      year is really about getting more people onto those pages.
+    </aside>
+  </section>
+
+  <!-- 2 · TITLE -->
+  <section data-background-color="#f1ede0">
+    <p class="kicker">Internet Archive · 2026 · Open Library</p>
+    <h1>Tools for<br>Participation</h1>
+    <p class="sub" style="font-size:.62em; max-width:48ch; margin-top:.9em;">
+      How 2026 went at Open Library — meeting readers where they are, earning their trust, and
+      handing everyone the tools to build the library with us.</p>
+    <aside class="notes">
+      This is the 2026 story at Open Library, told through one idea: participation. Everything we built
+      this year lowers the barrier between reading a book and improving the library. Three chapters —
+      meeting readers where they are on mobile, earning their trust as a lending provider, and giving
+      everyone the tools to contribute.
+    </aside>
+  </section>
+
+  <!-- 3 · WHAT'S NEW -->
+  <section data-background-color="#f1ede0">
+    <h2>What's New</h2>
+    <div class="principles">
+      <div class="principle">
+        <h4>📱 Mobile UX &amp; Design</h4>
+        <p>A mobile-first way to search, browse the stacks, and act on any book.</p></div>
+      <div class="principle">
+        <h4>📚 Lenny &amp; Lending</h4>
+        <p>A dependable book provider, so readers can borrow and read with confidence.</p></div>
+      <div class="principle">
+        <h4>🤝 Participation</h4>
+        <p>Snippets, micro-tasks, translations, lists, and tags — everyone contributes.</p></div>
+    </div>
+    <aside class="notes">
+      The spine of the talk — what's new this year, in three words: better UX, more ways to read, more
+      ways to participate. First you meet readers where they already are, which in 2026 means mobile.
+      Then you earn their trust by being a reliable place to actually borrow and read. Then, once they're
+      here and they trust you, you hand them tools so the next improvement to the library comes from
+      them, not just from us.
+    </aside>
+  </section>
+
+  <!-- 4 · MOBILE UX & DESIGN -->
+  <section data-background-color="#f1ede0">
+    <p class="step">1 / 3 · Better UX</p>
+    <h2>📱 Mobile UX &amp; Design</h2>
+    <p class="sub" style="font-size:.76em; max-width:66ch; margin-top:-.1em;">
+      A mobile-first redesign of how you find a book and what you can do with it.</p>
+    <div class="units">
+      <div class="unit"><div class="ui">🔎</div>
+        <h4>New Search UX</h4>
+        <p>Faster, clearer results that work thumb-first — the fastest path from a question to a book.</p></div>
+      <div class="unit"><div class="ui">📚</div>
+        <h4>Browse the Stacks</h4>
+        <p>A new homepage that lets you wander the shelves and discover, not just query a search box.</p></div>
+      <div class="unit"><div class="ui">⚡</div>
+        <h4>Shelf Actions</h4>
+        <p>Want to read, already read, add to a list — one tap from anywhere a book shows up.</p></div>
+    </div>
+    <aside class="notes">
+      Chapter one — meet readers where they are. Most of our traffic is on a phone, so this year we
+      rebuilt the core experience mobile-first. A new search UX that's fast and legible on a small
+      screen. A new homepage — Browse the Stacks — that invites you to wander and discover instead of
+      starting at an empty search box. And shelf actions: want-to-read, already-read, add-to-list, one
+      tap from anywhere a book appears. Small taps, lower barrier.
+    </aside>
+  </section>
+
+  <!-- 5 · LENNY / LENDING (video demo) -->
+  <section data-background-color="#f1ede0">
+    <p class="step">2 / 3 · More ways to read</p>
+    <h2>📚 Lenny: A Trusted Book Provider</h2>
+    <div class="two">
+      <div>
+        <p class="lede">Find a book, connect to <em>Lenny for Libraries</em>, and start reading —
+          borrowing folded right into the reading flow.</p>
+        <ul class="pts">
+          <li><b>Borrow in a tap.</b> Authorize once, then read instantly in the browser.</li>
+          <li><b>A node you can trust.</b> Lenny Labs runs lending as a dependable provider.</li>
+          <li><b>Read anywhere.</b> Real loans with a due date, on web or phone.</li>
+        </ul>
+        <p class="path" style="margin-top:.9em;"><a href="https://openlibrary.org/books/OL26947526M/Catboy">openlibrary.org/books/…/Catboy</a></p>
+      </div>
+      <figure class="demo" style="margin:0;">
+        <video src="img/catboy.mp4" poster="img/catboy-poster.jpg" muted autoplay loop playsinline controls preload="metadata"></video>
+        <figcaption class="cap">Live demo · borrow &amp; read “Catboy” via Lenny</figcaption>
+      </figure>
+    </div>
+    <aside class="notes">
+      Chapter two — earn trust. The best discovery in the world doesn't count if the borrow button is
+      unreliable. Here's the whole flow on one book, Catboy: find it on Open Library, authorize Lenny
+      for Libraries once, and you're reading in the browser — a real loan with a real due date. That's
+      what being a trusted book provider means. Trust is what turns a visitor into someone who stays —
+      and someone who stays is who contributes.
+    </aside>
+  </section>
+
+  <!-- 6 · TOOLS FOR PARTICIPATION (overview) -->
+  <section data-background-color="#f1ede0">
+    <p class="step">3 / 3 · More ways to participate</p>
+    <h2>🤝 Tools for Participation</h2>
+    <p class="sub" style="font-size:.76em; max-width:70ch; margin-top:-.1em;">
+      Five ways the community builds Open Library alongside us — each a small, low-friction way to
+      contribute.</p>
+    <div class="feats">
+      <div class="feat"><span class="fi">✂️</span>
+        <h4>Share Snippets</h4>
+        <p>Highlight a passage in BookReader and share it — every snippet flows into a global feed.</p></div>
+      <div class="feat"><span class="fi">✅</span>
+        <h4>Librarian <span class="tag">/tasks</span></h4>
+        <p>A dashboard of bite-size micro-tasks — anyone can pick one up and improve the catalog.</p></div>
+      <div class="feat"><span class="fi">🌐</span>
+        <h4><span class="tag">/translate</span></h4>
+        <p>A community translations dashboard — help read Open Library in your language.</p></div>
+      <div class="feat"><span class="fi">📑</span>
+        <h4>Shelf Actions &amp; Lists</h4>
+        <p>Build and share curated book lists in a couple of taps.</p></div>
+      <div class="feat"><span class="fi">🏷️</span>
+        <h4>Tag Books</h4>
+        <p>Add genres and types in the UI — powering “Find a book by / with / that…”.</p></div>
+    </div>
+    <aside class="notes">
+      Chapter three, the heart of it — hand people the tools. Five of them this year. I'll take each in
+      turn: share snippets, the librarian tasks dashboard, community translations, shelf actions and
+      lists, and UI book tagging. Each one is deliberately small. Low friction is the whole strategy.
+    </aside>
+  </section>
+
+  <!-- 7 · FEATURE · SHARE SNIPPETS -->
+  <section data-background-color="#f1ede0">
+    <p class="step">Participate · 1 / 5</p>
+    <h2>✂️ Share Snippets</h2>
+    <div class="two detail">
+      <div>
+        <p class="lede">Found a passage worth sharing? Highlight it right in BookReader and post it —
+          no screenshots, no retyping.</p>
+        <ul class="pts">
+          <li><b>Highlight → share.</b> Select text in the reader and get a clean, linkable snippet.</li>
+          <li><b>A global feed.</b> Every shared snippet joins a public feed of what people are reading.</li>
+          <li><b>A discovery loop.</b> A snippet is an invitation — it sends new readers back to the book.</li>
+        </ul>
+      </div>
+      <div class="spotlight">
+        <p class="sh">Shared to the feed</p>
+        <p class="snip">Hi, I'm Olive. My cat Henry is my best friend. I saw a shooting star…</p>
+        <span class="attr">— Catboy · shared by @reader · ♥ 42</span>
+      </div>
+    </div>
+    <aside class="notes">
+      Share snippets. If you've read something worth quoting, you shouldn't have to screenshot it.
+      Highlight the passage in BookReader, share it, and you get a clean linkable snippet — which also
+      flows into a global feed of what the community is reading. That feed is a discovery engine: every
+      snippet points back at the book it came from.
+    </aside>
+  </section>
+
+  <!-- 8 · FEATURE · LIBRARIAN /tasks -->
+  <section data-background-color="#f1ede0">
+    <p class="step">Participate · 2 / 5</p>
+    <h2>✅ Librarian <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/tasks</span></h2>
+    <div class="two detail">
+      <div>
+        <p class="lede">Improving the catalog used to mean knowing where to start. Now it's a to-do
+          list anyone can pick from.</p>
+        <ul class="pts">
+          <li><b>Bite-size micro-tasks.</b> Well-scoped jobs — fix a cover, merge an author, add a date.</li>
+          <li><b>No onboarding.</b> Grab a task, finish it in minutes, move on.</li>
+          <li><b>Real impact.</b> Each one is a concrete improvement to a real record.</li>
+        </ul>
+        <p class="path" style="margin-top:.9em;"><a href="https://openlibrary.org/tasks">openlibrary.org/tasks</a></p>
+      </div>
+      <div class="spotlight">
+        <p class="sh">Today's micro-tasks</p>
+        <ul class="checklist">
+          <li class="done">Add a cover for an edition missing one</li>
+          <li>Merge two duplicate author records</li>
+          <li>Add the publish date to a 2024 edition</li>
+          <li>Tag a book with its genre</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">
+      The librarian tasks dashboard. The hardest part of contributing to a catalog is knowing where to
+      start — so we turned it into a to-do list. Bite-size, well-scoped micro-tasks: fix a cover, merge
+      a duplicate author, add a missing date. No onboarding, pick one up and finish it in minutes. Every
+      task is a concrete improvement to a real record.
+    </aside>
+  </section>
+
+  <!-- 9 · FEATURE · /translate -->
+  <section data-background-color="#f1ede0">
+    <p class="step">Participate · 3 / 5</p>
+    <h2>🌐 <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/translate</span></h2>
+    <div class="two detail">
+      <div>
+        <p class="lede">Open Library should read naturally in your language — and the community is what
+          makes that happen.</p>
+        <ul class="pts">
+          <li><b>One dashboard.</b> A single place to translate and review interface strings.</li>
+          <li><b>Reviewed, then shipped.</b> Language leads review contributions before they go live.</li>
+          <li><b>Already live.</b> Translations across two dozen languages our readers speak.</li>
+        </ul>
+        <p class="path" style="margin-top:.9em;"><a href="https://openlibrary.org/translate">openlibrary.org/translate</a></p>
+      </div>
+      <div class="spotlight">
+        <p class="sh">Community languages</p>
+        <div class="pills">
+          <span class="p">English</span><span class="p">Español</span><span class="p">Français</span>
+          <span class="p">Deutsch</span><span class="p">हिन्दी</span><span class="p">中文</span>
+          <span class="p">العربية</span><span class="p">Português</span><span class="p">日本語</span>
+          <span class="p">Italiano</span><span class="p">+ more</span>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">
+      Community translations. Open Library should read naturally in your language, and the community
+      drives that through a single translations dashboard — translate a string, a language lead reviews
+      it, and it ships. It's already live across roughly two dozen languages, and any reader can add
+      theirs.
+    </aside>
+  </section>
+
+  <!-- 10 · FEATURE · SHELF ACTIONS & LISTS -->
+  <section data-background-color="#f1ede0">
+    <p class="step">Participate · 4 / 5</p>
+    <h2>📑 Shelf Actions &amp; Lists</h2>
+    <div class="two detail">
+      <div>
+        <p class="lede">Your shelves, your lists — built in a couple of taps, and easy to share.</p>
+        <ul class="pts">
+          <li><b>One-tap shelves.</b> Want to read, reading, read — from anywhere a book appears.</li>
+          <li><b>Build lists.</b> Group books into a curated list on any topic.</li>
+          <li><b>Share them.</b> A list is a reading recommendation anyone can follow.</li>
+        </ul>
+      </div>
+      <figure class="shot" style="margin:0;">
+        <img src="img/shelf-popover.png" alt="Shelf-actions popover on a book cover: Want to Read, Currently Reading, Already Read, Stopped Reading, star rating, Add to list">
+      </figure>
+    </div>
+    <aside class="notes">
+      Shelf actions and lists. The simplest participation of all: one-tap shelves — want to read,
+      reading, read — from anywhere a book appears, and the ability to group books into curated lists on
+      any topic. A list isn't just organization, it's a recommendation other people can follow.
+    </aside>
+  </section>
+
+  <!-- 11 · FEATURE · TAG BOOKS -->
+  <section data-background-color="#f1ede0">
+    <p class="step">Participate · 5 / 5</p>
+    <h2>🏷️ Tag Books</h2>
+    <div class="two detail">
+      <div>
+        <p class="lede">Add genres and types right in the UI — and unlock a whole new way to find
+          books.</p>
+        <ul class="pts">
+          <li><b>Tag in the UI.</b> Readers add genres and types, no special tools needed.</li>
+          <li><b>Powers discovery.</b> Tags feed richer search and browse for everyone.</li>
+          <li><b>Compounds.</b> Each tag makes the next search smarter.</li>
+        </ul>
+      </div>
+      <div class="spotlight">
+        <p class="sh">Find a book…</p>
+        <div class="qchips">
+          <div class="q">…that's a <b>graphic novel</b></div>
+          <div class="q">…with a <b>cat</b> on the cover</div>
+          <div class="q">…by a <b>debut author</b></div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">
+      Tagging books. Readers can add genres and types right in the UI — no special tooling — and those
+      tags power a whole new way to find books. Find a book that's a graphic novel, with a cat, by a
+      debut author. Every tag someone adds makes the next person's search smarter. That's the compounding
+      effect, and it comes from participation.
+    </aside>
+  </section>
+
+  <!-- 12 · CLOSE -->
+  <section data-background-color="#f1ede0">
+    <h1 style="font-size:1.7em;">📖 Everyone's Open Library.</h1>
+    <p class="sub" style="font-size:.82em; max-width:56ch; margin-top:.6em;">
+      Read a book, share a snippet, tag a genre, translate a string, pick up a task. Come build the
+      library with us.</p>
+    <p class="refs" style="margin-top:1.1em;">
+      <span class="lab">Open Library</span><a href="https://openlibrary.org">openlibrary.org</a><br>
+      <span class="lab">micro-tasks</span><a href="https://openlibrary.org/tasks">openlibrary.org/tasks</a><br>
+      <span class="lab">translate</span><a href="https://openlibrary.org/translate">openlibrary.org/translate</a><br>
+      <span class="lab">open source</span><a href="https://github.com/internetarchive/openlibrary">github.com/internetarchive/openlibrary</a></p>
+    <aside class="notes">
+      The point of all of it: it's everyone's Open Library. Read a book, share a snippet, tag a genre,
+      translate a string, pick up a task — every one is a real contribution now, and none takes more
+      than a minute. Open Library is open source and open to everyone. Come build it with us. Thank you.
+    </aside>
+  </section>
+
+</div></div>
+
+<script src="reveal.min.js"></script>
+<script src="notes.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash:true, slideNumber:'c/t', transition:'fade', transitionSpeed:'fast',
+    width:1280, height:720, margin:0.07, plugins:[ RevealNotes ]
+  });
+</script>
+<script>
+  // Slide 1 — floating field of covers. Ported from the "Every Book" design component.
+  (function () {
+    const sec = document.querySelector('section.every');
+    const field = sec.querySelector('.field'), tag = sec.querySelector('.tag');
+    const COLS = 19, ROWS = 13, CW = 112, CH = 168, PX = 132, PY = 190, X0 = -284, Y0 = -684; // 13 rows: 2 extra above and below the 1080 stage so tall aspect ratios never run out of covers
+    // [title, file] — covers.openlibrary.org images vendored into img/covers/ so every tile is guaranteed a cover.
+    const books = [
+      ["",'id-8997203'],["",'id-11838138'],["",'id-8440296'],["",'id-6507069'],
+      ["",'id-228066'],["",'id-9274740'],["",'id-12461562'],["",'id-14351077'],
+      ["",'id-9273490'],["",'id-14627509'],["",'id-14656497'],["",'id-15155833'],
+      ["",'id-14746089'],["",'id-12356249'],["",'id-12376585'],["",'id-8063264'],
+      ["",'id-14814353'],["",'id-10581983'],["",'id-14665299'],["",'id-14083354'],
+      ["",'id-14840482'],["",'id-11481354'],["",'id-283860'],["",'id-14612610'],
+      ["",'id-7350360'],["",'id-10138773'],["",'id-9255229'],["",'id-50842'],
+      ["",'id-7835968'],["",'id-35556'],["",'id-8634250'],["",'id-7884018'],
+      ["",'id-10592817'],["",'id-12374726'],["",'id-13526331'],["",'id-8824664'],
+      ["Pride and Prejudice",'isbn-9780141439518'],["The Great Gatsby",'isbn-9780743273565'],["To Kill a Mockingbird",'isbn-9780061120084'],["1984",'isbn-9780451524935'],
+      ["The Catcher in the Rye",'isbn-9780316769488'],["The Hobbit",'isbn-9780345339683'],["Brave New World",'isbn-9780060850524'],["Crime and Punishment",'isbn-9780140449136'],
+      ["Anna Karenina",'isbn-9780143035008'],["Moby-Dick",'isbn-9780142437247'],["Jane Eyre",'isbn-9780141441146'],["Wuthering Heights",'isbn-9780141439556'],
+      ["The Odyssey",'isbn-9780143039952'],["Slaughterhouse-Five",'isbn-9780385333849'],["Frankenstein",'isbn-9780141439471'],["The Book Thief",'isbn-9780375842207'],
+      ["The Road",'isbn-9780307277671'],["The Hunger Games",'isbn-9780439023481'],["The Alchemist",'isbn-9780062315007'],["Gone Girl",'isbn-9780307588371'],
+      ["The Grapes of Wrath",'isbn-9780143039433'],["The Stranger",'isbn-9780679720201'],["Beloved",'isbn-9781400033416'],["A Brief History of Time",'isbn-9780553380163'],
+      ["Lolita",'isbn-9780679723165'],["War and Peace",'isbn-9781400079988'],["One Hundred Years of Solitude",'isbn-9780060883287'],["The Hitchhiker's Guide",'isbn-9780345391803'],
+      ["Dune",'isbn-9780441013593'],["The Little Prince",'isbn-9780156012195'],["The Lion, the Witch and the Wardrobe",'isbn-9780064471046'],["Charlotte's Web",'isbn-9780064400558'],
+      ["Where the Wild Things Are",'isbn-9780060256654'],["The Fault in Our Stars",'isbn-9780525478812'],["Great Expectations",'isbn-9780141439600'],["A Tale of Two Cities",'isbn-9780141439563'],
+      ["The Handmaid's Tale",'isbn-9780385490818'],["The Brothers Karamazov",'isbn-9780374528379'],["Of Mice and Men",'isbn-9780142000670'],["Fahrenheit 451",'isbn-9781451673319'],
+      ["The Shining",'isbn-9780307743657'],["Atomic Habits",'isbn-9780735211292'],["Sapiens",'isbn-9780062316097'],["Educated",'isbn-9780399590504'],
+      ["Circe",'isbn-9780316556347'],["Where the Crawdads Sing",'isbn-9780735219090'],["The Midnight Library",'isbn-9780525559474'],["Project Hail Mary",'isbn-9780593135204'],
+      ["The Martian",'isbn-9780553418026'],["Klara and the Sun",'isbn-9780593318171'],["The Da Vinci Code",'isbn-9780307474278'],["Little Women",'isbn-9780141321097'],
+      ["The Lord of the Rings",'isbn-9780544003415'],["Harry Potter and the Sorcerer's Stone",'isbn-9780439708180']
+    ].map(([title, file]) => ({ title, src: 'img/covers/' + file + '.jpg' }));
+    const colors = ['var(--accent)','var(--accent2)','var(--green)','var(--muted)','var(--ink)'];
+    const hash = i => { const x = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); };
+
+    // Build the tiles: a deterministic shuffle of the covers, repeated to fill the 19x13 field.
+    const list = books.slice();
+    for (let i = list.length - 1; i > 0; i--) { const j = Math.floor(hash(i + 1000) * (i + 1)); [list[i], list[j]] = [list[j], list[i]]; }
+    const els = [], imgs = [];
+    for (let i = 0; i < COLS * ROWS; i++) {
+      const b = list[i % list.length], el = document.createElement('div');
+      el.className = 'cov';
+      el.style.left = (X0 + (i % COLS) * PX) + 'px'; el.style.top = (Y0 + Math.floor(i / COLS) * PY) + 'px';
+      el.style.background = colors[Math.floor(hash(i) * colors.length)];
+      const span = document.createElement('span'); span.textContent = b.title; el.appendChild(span);
+      const img = new Image(); img.alt = b.title; img.onerror = () => { img.style.opacity = '0'; }; img.src = b.src; el.appendChild(img);
+      field.appendChild(el); els.push(el); imgs.push(img);
+    }
+    // Preload: hold the entrance until every cover is decoded (or 2.5s, whichever comes first).
+    const loaded = Promise.race([
+      Promise.all(imgs.map(img => img.decode().catch(() => {}))),
+      new Promise(resolve => setTimeout(resolve, 2500))
+    ]);
+
+    const easeInOut = p => p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    const easeOut = p => 1 - Math.pow(1 - p, 4);
+    const easeIn = p => p * p * p;
+    const variant = ['grid','diagonal','wave'].includes(sec.dataset.formation) ? sec.dataset.formation : 'grid';
+
+    function formation(v, i, t) {
+      const c = i % COLS, r = Math.floor(i / COLS);
+      const gx = X0 + c * PX, gy = Y0 + r * PY;
+      if (v === 'grid') {
+        return { x: gx + 30 * Math.sin(t * 0.17), y: gy + 22 * Math.sin(t * 0.22 + 1) + 3 * Math.sin(t * 0.6 + i * 0.7), r: 0, s: 1 + 0.012 * Math.sin(t * 0.5 + (c + r) * 0.4) };
+      }
+      if (v === 'diagonal') {
+        const th = -12 * Math.PI / 180, RW = COLS * PX, vel = r % 2 ? 13 : -10;
+        const ux = (((c * PX + vel * t) % RW) + RW) % RW;
+        const lx = X0 + ux + CW / 2 - 960, ly = gy + CH / 2 - 540 + 4 * Math.sin(t * 0.4 + r);
+        return { x: 960 + lx * Math.cos(th) - ly * Math.sin(th) - CW / 2, y: 540 + lx * Math.sin(th) + ly * Math.cos(th) - CH / 2, r: -12, s: 1 };
+      }
+      const ph = c * 0.55 + r * 0.3 - t * 0.8;
+      return { x: gx + 18 * Math.sin(t * 0.1), y: gy + 34 * Math.sin(ph), r: 3.5 * Math.cos(ph), s: 1 + 0.03 * Math.sin(ph + 1) };
+    }
+
+    let phase = 'hidden', enterStart = 0, exitStart = 0, raf = 0;
+    function frame(now) {
+      const t = (now - enterStart) / 1000;
+      let allGone = phase === 'exit';
+      for (let i = 0; i < els.length; i++) {
+        const el = els[i];
+        const bx = X0 + (i % COLS) * PX, by = Y0 + Math.floor(i / COLS) * PY;
+        const f = formation(variant, i, t);
+        const cx = f.x + CW / 2 - 960, cy = f.y + CH / 2 - 540;
+        const dist = Math.hypot(cx, cy) || 1, dn = Math.min(1, dist / 1200), dx = cx / dist, dy = cy / dist;
+        const h = hash(i);
+        let x = f.x, y = f.y, rot = f.r, s = f.s, o = 1;
+        if (phase === 'enter') {
+          const p = easeInOut(Math.max(0, Math.min(1, (now - enterStart - (dn * 650 + h * 120)) / 1500)));
+          x += dx * (1 - p) * 380; y += dy * (1 - p) * 380; s *= 0.72 + 0.28 * p; o = Math.min(1, p * 1.4); rot += (1 - p) * (h - 0.5) * 14;
+        } else if (phase === 'exit') {
+          const raw = Math.max(0, Math.min(1, (now - exitStart - ((1 - dn) * 350 + h * 80)) / 850));
+          const p = easeIn(raw);
+          x += dx * p * 520; y += dy * p * 520; s *= 1 + 0.18 * p; o = 1 - raw * raw; if (raw < 1) allGone = false;
+        } else { o = 0; }
+        el.style.transform = 'translate3d(' + (x - bx).toFixed(2) + 'px,' + (y - by).toFixed(2) + 'px,0) rotate(' + rot.toFixed(2) + 'deg) scale(' + s.toFixed(3) + ')';
+        el.style.opacity = o.toFixed(3);
+      }
+      let o = 1, ty = 0;
+      if (phase === 'enter') { const p = easeOut(Math.max(0, Math.min(1, (now - enterStart - 1000) / 1300))); o = p; ty = (1 - p) * 40; }
+      else if (phase === 'exit') { const p = Math.max(0, Math.min(1, (now - exitStart) / 700)); o = 1 - p * p; ty = -easeIn(p) * 60; if (p < 1) allGone = false; }
+      else { o = 0; }
+      tag.style.opacity = o.toFixed(3); tag.style.transform = 'translate3d(0,' + ty.toFixed(2) + 'px,0)';
+      if (phase === 'exit' && allGone) { phase = 'hidden'; stop(); return; }
+      raf = requestAnimationFrame(frame);
+    }
+    function run() { if (!raf) raf = requestAnimationFrame(frame); }
+    function stop() { cancelAnimationFrame(raf); raf = 0; }
+    function enter() { phase = 'enter'; enterStart = performance.now(); run(); }
+    function exit() { if (phase === 'exit' || phase === 'hidden') return; phase = 'exit'; exitStart = performance.now(); run(); }
+    function leave() { phase = 'hidden'; stop(); frame(performance.now()); stop(); }
+
+    Reveal.on('ready', () => loaded.then(() => { if (Reveal.getCurrentSlide() === sec && phase === 'hidden') enter(); }));
+    Reveal.on('slidechanged', e => { if (e.currentSlide === sec) enter(); else if (e.previousSlide === sec) leave(); });
+    Reveal.on('fragmentshown', e => { if (e.fragment.closest('section') === sec) exit(); });
+    Reveal.on('fragmenthidden', e => { if (e.fragment.closest('section') === sec && phase !== 'enter') enter(); });
+  })();
+</script>
+</body>
+</html>
