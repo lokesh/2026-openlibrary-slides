@@ -43,8 +43,6 @@
     .reveal .muted { color:var(--muted); }
 
     .kicker { color:var(--accent); font-family:'JetBrains Mono',monospace; font-size:.5em; letter-spacing:.22em; text-transform:uppercase; margin-bottom:.4em; }
-    .step { display:inline-block; font-family:'JetBrains Mono',monospace; font-size:.52em; color:var(--accent);
-            letter-spacing:.16em; text-transform:uppercase; border:1px solid var(--line); border-radius:2em; padding:.25em 1em; margin-bottom:.7em; }
     .colhdr { font-family:'JetBrains Mono',monospace; font-size:.5em; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:.4em; }
     .sub { color:var(--muted); font-size:.82em; max-width:52ch; }
     .path { font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.74em; }
@@ -144,7 +142,7 @@
     .reveal section.bleed { height:720px; padding:0; overflow:hidden; }
     .bleed .bgshot { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
     .bleed .bgshot img { position:absolute; left:50%; top:196px; width:1060px; max-width:none; height:auto; transform:translateX(-50%); display:block; }
-    .bleed .copy { position:absolute; left:96px; right:96px; top:44px; }
+    .bleed .copy { position:absolute; left:96px; right:96px; top:64px; }
 
     /* right-side spotlight mock */
     .spotlight { background:var(--card); border:1px solid var(--line);
@@ -283,7 +281,6 @@
 
   <!-- 4 · MOBILE UX & DESIGN -->
   <section data-background-color="#f1ede0">
-    <p class="step">1 / 3 · Better UX</p>
     <h2><svg class="ic ic-smartphone" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>Mobile UX &amp; Design</h2>
     <p class="sub" style="font-size:.76em; max-width:66ch; margin-top:-.1em;">
       A mobile-first redesign of how you find a book and what you can do with it.</p>
@@ -313,7 +310,6 @@
       <img src="img/search-inside.png" alt="">
     </div>
     <div class="copy">
-      <p class="step">1 / 3 · Better UX</p>
       <h2 style="margin-bottom:.25em;"><svg class="ic ic-search" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>New Search UX</h2>
       <p class="sub" style="font-size:.7em; max-width:72ch; margin:0;">
         One search box, two tabs: find a <em>book</em>, or search <em>inside</em> millions of them, with a
@@ -331,7 +327,6 @@
 
   <!-- 6 · FEATURE · SHELF ACTIONS & LISTS (live popover demo) -->
   <section data-background-color="#f1ede0">
-    <p class="step">1 / 3 · Better UX</p>
     <h2><svg class="ic ic-list-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg>Shelf Actions &amp; Lists</h2>
     <div class="two detail">
       <div>
@@ -369,7 +364,6 @@
 
   <!-- 7 · LENNY / LENDING (video demo) -->
   <section data-background-color="#f1ede0">
-    <p class="step">2 / 3 · More ways to read</p>
     <h2><svg class="ic ic-book-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Lenny: A Trusted Book Provider</h2>
     <div class="two">
       <div>
@@ -398,7 +392,6 @@
 
   <!-- 8 · TOOLS FOR PARTICIPATION (overview) -->
   <section data-background-color="#f1ede0">
-    <p class="step">3 / 3 · More ways to participate</p>
     <h2><svg class="ic ic-handshake" viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>Tools for Participation</h2>
     <p class="sub" style="font-size:.76em; max-width:70ch; margin-top:-.1em;">
       Four ways the community builds Open Library alongside us. Each is a small, low-friction way to
@@ -419,13 +412,13 @@
     </div>
     <aside class="notes">
       Chapter three, the heart of it: hand people the tools. Four of them this year. I'll take each in
-      turn: share snippets, the librarian tasks dashboard, community translations, and UI book tagging. Each one is deliberately small. Low friction is the whole strategy.
+      turn: share snippets, the librarian tasks dashboard, community translations, and UI book tagging.
+      Each one is deliberately small. Low friction is the whole strategy.
     </aside>
   </section>
 
   <!-- 9 · FEATURE · SHARE SNIPPETS -->
   <section data-background-color="#f1ede0">
-    <p class="step">Participate · 1 / 4</p>
     <h2><svg class="ic ic-share-2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>Share Snippets</h2>
     <div class="two detail">
       <div>
@@ -453,7 +446,6 @@
 
   <!-- 10 · FEATURE · LIBRARIAN /tasks -->
   <section data-background-color="#f1ede0">
-    <p class="step">Participate · 2 / 4</p>
     <h2><svg class="ic ic-circle-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5 5.5-5.5"/></svg>Librarian <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/tasks</span></h2>
     <div class="two detail">
       <div>
@@ -486,7 +478,6 @@
 
   <!-- 11 · FEATURE · /translate -->
   <section data-background-color="#f1ede0">
-    <p class="step">Participate · 3 / 4</p>
     <h2><svg class="ic ic-globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/translate</span></h2>
     <div class="two detail">
       <div>
@@ -517,7 +508,6 @@
 
   <!-- 12 · FEATURE · TAG BOOKS -->
   <section data-background-color="#f1ede0">
-    <p class="step">Participate · 4 / 4</p>
     <h2><svg class="ic ic-tag" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>Tag Books</h2>
     <div class="two detail">
       <div>
