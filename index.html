@@ -194,6 +194,20 @@
                            border-radius:50%; background:var(--accent); }
     @media (prefers-reduced-motion: reduce) { .llist ul, .llist li { transition:none; } .langdemo .swap.in { animation:none; } }
 
+    /* about slide — bold facts that punch in one at a time (timed, see script at the bottom) */
+    .facts { list-style:none; margin:.5em 0 0; padding:0; }
+    .facts li { display:grid; grid-template-columns:auto 1fr; column-gap:.55em; align-items:start;
+                font-family:'Literata',serif; font-optical-sizing:none; font-weight:700; font-size:1.06em; line-height:1.18;
+                letter-spacing:-.01em; color:var(--ink); padding:.42em 0; border-top:1px solid var(--line); }
+    .facts li:first-child { border-top:0; }
+    .facts .fb { display:flex; align-items:center; justify-content:center; width:1.35em; height:1.35em; margin-top:-.04em;
+                 border-radius:50%; background:var(--blue-wash); }
+    .facts .fb .ic { width:.72em; height:.72em; vertical-align:0; }
+    .facts em { font-weight:700; }
+    .facts li { opacity:0; transform:translateY(.4em) scale(.97); transform-origin:0 50%; }
+    .facts li.on { opacity:1; transform:none; transition:opacity .3s ease-out, transform .6s cubic-bezier(.2,.8,.2,1); }
+    @media (prefers-reduced-motion:reduce) { .facts li { transform:none; } .facts li.on { transition:none; } }
+
     /* close / references */
     .refs { font-size:.64em; line-height:2.05; }
     .refs .lab { color:var(--muted); display:inline-block; min-width:8.5em; }
@@ -226,7 +240,7 @@
 <div class="reveal"><div class="slides">
 
   <!-- 1 · EVERY BOOK (opener) -->
-  <!-- data-formation: grid | diagonal | wave. Press → once to play the exit, again to advance. -->
+  <!-- data-formation: grid | diagonal | wave. Press → once: the exit plays, then the deck advances on its own. -->
   <section class="every" data-background-color="#f1ede0" data-formation="grid">
     <div class="stage">
       <div class="field"></div>
@@ -241,47 +255,32 @@
     </aside>
   </section>
 
-  <!-- 2 · TITLE -->
+  <!-- 2 · WHAT IS OPEN LIBRARY (about) -->
   <section data-background-color="#f1ede0">
-    <p class="kicker">Internet Archive · 2026 · Open Library</p>
-    <h1>Tools for<br>Participation</h1>
-    <p class="sub" style="font-size:.62em; max-width:48ch; margin-top:.9em;">
-      How 2026 went at Open Library: meeting readers where they are, earning their trust, and
-      handing everyone the tools to build the library with us.</p>
+    <p class="kicker">openlibrary.org</p>
+    <h2>What is Open Library?</h2>
+    <ul class="facts">
+      <li><span class="fb"><svg class="ic ic-library-big" viewBox="0 0 24 24" aria-hidden="true"><rect width="8" height="18" x="3" y="3" rx="1"/><path d="M7 3v18"/><path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z"/></svg></span>
+        <span>The Internet Archive's catalog of <em>every book ever published</em>.</span></li>
+      <li><span class="fb"><svg class="ic ic-book-open-text" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v16"/><path d="M16 13h2"/><path d="M16 9h2"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/><path d="M6 13h2"/><path d="M6 9h2"/></svg></span>
+        <span><em>4.7 million</em> books you can read online, for free.</span></li>
+      <li><span class="fb"><svg class="ic ic-users" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <span>A library <em>built by the public</em>. Anyone can edit.</span></li>
+      <li><span class="fb"><svg class="ic ic-shield-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <span>Open source. Non-profit. Privacy protecting. <em>Ad-free</em>.</span></li>
+    </ul>
     <aside class="notes">
-      This is the 2026 story at Open Library, told through one idea: participation. Everything we built
-      this year lowers the barrier between reading a book and improving the library. Three chapters:
-      meeting readers where they are on mobile, earning their trust as a lending provider, and giving
-      everyone the tools to contribute.
+      Before the new stuff, the one-minute version of what Open Library is. It's the Internet Archive's
+      catalog of every book ever published: one page for every book, whether or not we have a copy. Of
+      those, 4.7 million you can open and read right now, for free. It's a library built by the public:
+      a catalog anyone can edit, like Wikipedia for books. And it's open source, non-profit, privacy
+      protecting, and ad-free. Those four words are the whole reason the rest of this talk works.
     </aside>
   </section>
 
-  <!-- 3 · WHAT'S NEW -->
+  <!-- 3 · UX & DESIGN -->
   <section data-background-color="#f1ede0">
-    <h2>What's New</h2>
-    <div class="principles">
-      <div class="principle">
-        <h4><svg class="ic ic-smartphone" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>Mobile UX &amp; Design</h4>
-        <p>A mobile-first way to search, browse the stacks, and act on any book.</p></div>
-      <div class="principle">
-        <h4><svg class="ic ic-book-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Lenny &amp; Lending</h4>
-        <p>A dependable book provider, so readers can borrow and read with confidence.</p></div>
-      <div class="principle">
-        <h4><svg class="ic ic-handshake" viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>Participation</h4>
-        <p>Snippets, micro-tasks, translations, lists, and tags. Everyone contributes.</p></div>
-    </div>
-    <aside class="notes">
-      The spine of the talk is what's new this year, in three words: better UX, more ways to read, more
-      ways to participate. First you meet readers where they already are, which in 2026 means mobile.
-      Then you earn their trust by being a reliable place to actually borrow and read. Then, once they're
-      here and they trust you, you hand them tools so the next improvement to the library comes from
-      them, not just from us.
-    </aside>
-  </section>
-
-  <!-- 4 · MOBILE UX & DESIGN -->
-  <section data-background-color="#f1ede0">
-    <h2><svg class="ic ic-smartphone" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>Mobile UX &amp; Design</h2>
+    <h2><svg class="ic ic-smartphone" viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>UX &amp; Design</h2>
     <p class="sub" style="font-size:.76em; max-width:66ch; margin-top:-.1em;">
       A mobile-first redesign of how you find a book and what you can do with it.</p>
     <div class="units">
@@ -304,10 +303,10 @@
     </aside>
   </section>
 
-  <!-- 5 · FEATURE · NEW SEARCH UX (full-bleed screenshot) -->
+  <!-- 4 · FEATURE · NEW SEARCH UX (full-bleed screenshot) -->
   <section class="bleed" data-background-color="#f1ede0">
     <div class="bgshot" aria-hidden="true">
-      <img src="img/search-inside.png" alt="">
+      <img src="img/search-books.png" alt="">
     </div>
     <div class="copy">
       <h2 style="margin-bottom:.25em;"><svg class="ic ic-search" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>New Search UX</h2>
@@ -325,7 +324,7 @@
     </aside>
   </section>
 
-  <!-- 6 · FEATURE · SHELF ACTIONS & LISTS (live popover demo) -->
+  <!-- 5 · FEATURE · SHELF ACTIONS & LISTS (live popover demo) -->
   <section data-background-color="#f1ede0">
     <h2><svg class="ic ic-list-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg>Shelf Actions &amp; Lists</h2>
     <div class="two detail">
@@ -362,7 +361,7 @@
     </aside>
   </section>
 
-  <!-- 7 · LENNY / LENDING (video demo) -->
+  <!-- 6 · LENNY / LENDING (video demo) -->
   <section data-background-color="#f1ede0">
     <h2><svg class="ic ic-book-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Lenny: A Trusted Book Provider</h2>
     <div class="two">
@@ -390,7 +389,7 @@
     </aside>
   </section>
 
-  <!-- 8 · TOOLS FOR PARTICIPATION (overview) -->
+  <!-- 7 · TOOLS FOR PARTICIPATION (overview) -->
   <section data-background-color="#f1ede0">
     <h2><svg class="ic ic-handshake" viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>Tools for Participation</h2>
     <p class="sub" style="font-size:.76em; max-width:70ch; margin-top:-.1em;">
@@ -417,7 +416,7 @@
     </aside>
   </section>
 
-  <!-- 9 · FEATURE · SHARE SNIPPETS -->
+  <!-- 8 · FEATURE · SHARE SNIPPETS -->
   <section data-background-color="#f1ede0">
     <h2><svg class="ic ic-share-2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>Share Snippets</h2>
     <div class="two detail">
@@ -444,7 +443,7 @@
     </aside>
   </section>
 
-  <!-- 10 · FEATURE · LIBRARIAN /tasks -->
+  <!-- 9 · FEATURE · LIBRARIAN /tasks -->
   <section data-background-color="#f1ede0">
     <h2><svg class="ic ic-circle-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5 5.5-5.5"/></svg>Librarian <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/tasks</span></h2>
     <div class="two detail">
@@ -476,7 +475,7 @@
     </aside>
   </section>
 
-  <!-- 11 · FEATURE · /translate -->
+  <!-- 10 · FEATURE · /translate -->
   <section data-background-color="#f1ede0">
     <h2><svg class="ic ic-globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/translate</span></h2>
     <div class="two detail">
@@ -506,7 +505,7 @@
     </aside>
   </section>
 
-  <!-- 12 · FEATURE · TAG BOOKS -->
+  <!-- 11 · FEATURE · TAG BOOKS -->
   <section data-background-color="#f1ede0">
     <h2><svg class="ic ic-tag" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>Tag Books</h2>
     <div class="two detail">
@@ -536,7 +535,7 @@
     </aside>
   </section>
 
-  <!-- 13 · CLOSE -->
+  <!-- 12 · CLOSE -->
   <section data-background-color="#f1ede0">
     <h1 style="font-size:1.7em;"><svg class="ic ic-book-open-text" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v16"/><path d="M16 13h2"/><path d="M16 9h2"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/><path d="M6 13h2"/><path d="M6 9h2"/></svg>Everyone's Open Library.</h1>
     <p class="sub" style="font-size:.82em; max-width:56ch; margin-top:.6em;">
@@ -667,7 +666,11 @@
       else if (phase === 'exit') { const p = Math.max(0, Math.min(1, (now - exitStart) / 700)); o = 1 - p * p; ty = -easeIn(p) * 60; if (p < 1) allGone = false; }
       else { o = 0; }
       tag.style.opacity = o.toFixed(3); tag.style.transform = 'translate3d(0,' + ty.toFixed(2) + 'px,0)';
-      if (phase === 'exit' && allGone) { phase = 'hidden'; stop(); return; }
+      if (phase === 'exit' && allGone) {
+        phase = 'hidden'; stop();
+        if (Reveal.getCurrentSlide() === sec) Reveal.next();   // exit done: move on without a second keypress
+        return;
+      }
       raf = requestAnimationFrame(frame);
     }
     function run() { if (!raf) raf = requestAnimationFrame(frame); }
@@ -683,7 +686,24 @@
   })();
 </script>
 <script>
-  // Slide 9 — /translate: the same book re-rendered in each community language.
+  // Slide 2 — about: the four facts punch in one at a time, every 2s, replaying on each visit.
+  (function () {
+    const list = document.querySelector('.facts'); if (!list) return;
+    const sec = list.closest('section'), lis = Array.from(list.children);
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches, GAP = 2000;
+    let timers = [];
+    function reset() { timers.forEach(clearTimeout); timers = []; lis.forEach(li => li.classList.remove('on')); }
+    function play() {
+      reset();
+      if (reduced) { lis.forEach(li => li.classList.add('on')); return; }
+      lis.forEach((li, i) => timers.push(setTimeout(() => li.classList.add('on'), 400 + i * GAP)));
+    }
+    Reveal.on('ready', e => { if (e.currentSlide === sec) play(); });
+    Reveal.on('slidechanged', e => { if (e.currentSlide === sec) play(); else if (e.previousSlide === sec) reset(); });
+  })();
+</script>
+<script>
+  // Slide 10 — /translate: the same book re-rendered in each community language.
   (function () {
     const sec = document.querySelector('.langdemo').closest('section');
     const title = sec.querySelector('.lcov .t'), ul = sec.querySelector('.llist ul');
@@ -736,7 +756,7 @@
   })();
 </script>
 <script>
-  // Slide 6 — shelf-actions popover demo: a scripted cursor taps the chip, the menu opens, Currently Reading is picked.
+  // Slide 5 — shelf-actions popover demo: a scripted cursor taps the chip, the menu opens, Currently Reading is picked.
   (function () {
     const demo = document.querySelector('.shelfdemo'); if (!demo) return;
     const sec = demo.closest('section'), cursor = demo.querySelector('.sd-cursor'), ring = demo.querySelector('.sd-ring');
