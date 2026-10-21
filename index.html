@@ -75,6 +75,7 @@
     .feat h4 { font-family:'Literata',serif; font-size:.82em; color:var(--ink); margin:.18em 0 .25em; font-weight:700; }
     .feat h4 .tag { font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.86em; font-weight:500; }
     .feat p { margin:0; font-size:.52em; color:var(--muted); line-height:1.42; }
+    .feats.four .feat { flex-basis:calc((100% - 1.8em) / 4); }
 
     /* two-column (demo / detail) */
     .two { display:grid; grid-template-columns:1fr 1fr; gap:1.3em; align-items:center; margin-top:.4em; }
@@ -92,8 +93,58 @@
     .demo .cap { background:var(--card); color:var(--accent); font-family:'JetBrains Mono',monospace;
                  font-size:.46em; letter-spacing:.07em; text-transform:uppercase; padding:.45em .7em; border-top:1px solid var(--line); }
 
-    /* screenshot (transparent PNG with its own shadow) */
-    .shot img { display:block; width:100%; height:auto; max-height:470px; object-fit:contain; }
+    /* shelf-actions demo — live mock of the openlibrary.org shelf popover, driven by a scripted cursor */
+    .shelfdemo { position:relative; width:620px; height:470px; margin:0 auto; font-family:'Schibsted Grotesk',system-ui,sans-serif; }
+    .shelfdemo .ic { color:var(--muted); }
+    .sd-cover { position:absolute; left:49px; top:59px; width:157px; height:237px; border-radius:8px; object-fit:cover;
+                box-shadow:0 10px 26px -10px rgba(43,39,29,.45); }
+    .sd-chip { position:absolute; left:168px; top:70px; width:30px; height:30px; border-radius:50%; background:var(--card);
+               display:flex; align-items:center; justify-content:center; box-shadow:0 1px 4px rgba(43,39,29,.3);
+               transition:transform .12s ease-out; }
+    .sd-chip .ic { width:17px; height:17px; color:var(--accent); }
+    .sd-chip .ic-book-open-filled, .sd-reading .ic-book-open-filled { display:none; fill:currentColor; stroke:none; }
+    .shelfdemo.reading .sd-chip .ic-bookmark { display:none; }
+    .shelfdemo.reading .sd-chip .ic-book-open-filled { display:block; }
+    .shelfdemo.press .sd-chip { transform:scale(.88); }
+    .sd-pop { position:absolute; left:165px; top:113px; width:395px; box-sizing:border-box; padding:14px 19px 6px;
+              background:var(--card); border-radius:16px; color:var(--ink);
+              box-shadow:0 14px 40px -12px rgba(43,39,29,.4), 0 0 0 1px rgba(43,39,29,.06);
+              opacity:0; transform:translateY(-8px) scale(.94); transform-origin:10% 0; pointer-events:none;
+              transition:opacity .16s ease-out, transform .24s cubic-bezier(.2,.8,.2,1); }
+    .shelfdemo.open .sd-pop { opacity:1; transform:none; }
+    .sd-title { font-size:14px; color:var(--muted); padding-bottom:10px; border-bottom:1px solid var(--line); margin-bottom:4px; }
+    .sd-row { display:flex; align-items:center; gap:14px; height:45px; margin:0 -10px; padding:0 10px; border-radius:8px;
+              font-size:17px; line-height:1; transition:background .15s; }
+    .sd-row.hover { background:var(--bg2); }
+    .sd-row .ic { width:21px; height:21px; flex:none; }
+    .sd-row > span { flex:1; }
+    .sd-row .ic-check { display:none; color:var(--accent); }
+    .sd-row.active { color:var(--accent); font-weight:600; }
+    .sd-row.active .ic { color:var(--accent); }
+    .sd-row.active .ic-check { display:block; }
+    .sd-row.active .ic-book-open { display:none; }
+    .sd-row.active .ic-book-open-filled { display:block; }
+    .sd-rate { display:flex; align-items:center; gap:7px; height:50px; margin-top:4px; font-size:16px; color:var(--muted);
+               border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+    .sd-rate .ic { width:21px; height:21px; } .sd-rate span { margin-left:8px; }
+    .sd-list { margin-top:4px; }
+    .sd-list .ic-chevron-right { width:18px; height:18px; }
+    .sd-cursor { position:absolute; left:0; top:0; width:20px; height:26px; z-index:3; transform:translate(640px,480px);
+                 transition:transform .8s cubic-bezier(.3,.7,.2,1); will-change:transform; }
+    .sd-cursor svg { display:block; width:100%; height:100%; fill:var(--ink); stroke:var(--card); stroke-width:1.5; stroke-linejoin:round;
+                     filter:drop-shadow(0 1px 2px rgba(43,39,29,.35)); transform-origin:2px 2px; transition:transform .1s; }
+    .shelfdemo.press .sd-cursor svg { transform:scale(.86); }
+    .sd-ring { position:absolute; left:0; top:0; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%; z-index:2;
+               background:var(--accent); opacity:0; pointer-events:none; }
+    .sd-ring.go { animation:sd-ring .45s ease-out; }
+    @keyframes sd-ring { 0% { opacity:.45; transform:scale(.6); } 100% { opacity:0; transform:scale(3.2); } }
+    @media (prefers-reduced-motion:reduce) { .sd-pop, .sd-cursor, .sd-cursor svg, .sd-chip { transition:none; } }
+
+    /* full-bleed screenshot slide — the shot sits behind the heading and bleeds off the bottom edge */
+    .reveal section.bleed { height:720px; padding:0; overflow:hidden; }
+    .bleed .bgshot { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+    .bleed .bgshot img { position:absolute; left:50%; top:196px; width:1060px; max-width:none; height:auto; transform:translateX(-50%); display:block; }
+    .bleed .copy { position:absolute; left:96px; right:96px; top:44px; }
 
     /* right-side spotlight mock */
     .spotlight { background:var(--card); border:1px solid var(--line);
@@ -186,7 +237,7 @@
     <span class="fragment" aria-hidden="true"></span>
     <aside class="notes">
       Before any of the new stuff, this is the whole idea in one line. Open Library is a wiki catalog
-      for every book ever published — one page per book, that anyone can edit. Every cover floating
+      for every book ever published: one page per book, that anyone can edit. Every cover floating
       behind me is a page someone made better. Keep that in mind, because everything I show you this
       year is really about getting more people onto those pages.
     </aside>
@@ -197,11 +248,11 @@
     <p class="kicker">Internet Archive · 2026 · Open Library</p>
     <h1>Tools for<br>Participation</h1>
     <p class="sub" style="font-size:.62em; max-width:48ch; margin-top:.9em;">
-      How 2026 went at Open Library — meeting readers where they are, earning their trust, and
+      How 2026 went at Open Library: meeting readers where they are, earning their trust, and
       handing everyone the tools to build the library with us.</p>
     <aside class="notes">
       This is the 2026 story at Open Library, told through one idea: participation. Everything we built
-      this year lowers the barrier between reading a book and improving the library. Three chapters —
+      this year lowers the barrier between reading a book and improving the library. Three chapters:
       meeting readers where they are on mobile, earning their trust as a lending provider, and giving
       everyone the tools to contribute.
     </aside>
@@ -219,10 +270,10 @@
         <p>A dependable book provider, so readers can borrow and read with confidence.</p></div>
       <div class="principle">
         <h4><svg class="ic ic-handshake" viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>Participation</h4>
-        <p>Snippets, micro-tasks, translations, lists, and tags — everyone contributes.</p></div>
+        <p>Snippets, micro-tasks, translations, lists, and tags. Everyone contributes.</p></div>
     </div>
     <aside class="notes">
-      The spine of the talk — what's new this year, in three words: better UX, more ways to read, more
+      The spine of the talk is what's new this year, in three words: better UX, more ways to read, more
       ways to participate. First you meet readers where they already are, which in 2026 means mobile.
       Then you earn their trust by being a reliable place to actually borrow and read. Then, once they're
       here and they trust you, you hand them tools so the next improvement to the library comes from
@@ -239,31 +290,91 @@
     <div class="units">
       <div class="unit"><div class="ui"><svg class="ic ic-search" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
         <h4>New Search UX</h4>
-        <p>Faster, clearer results that work thumb-first — the fastest path from a question to a book.</p></div>
+        <p>Faster, clearer results that work thumb-first. The fastest path from a question to a book.</p></div>
       <div class="unit"><div class="ui"><svg class="ic ic-library-big" viewBox="0 0 24 24" aria-hidden="true"><rect width="8" height="18" x="3" y="3" rx="1"/><path d="M7 3v18"/><path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z"/></svg></div>
         <h4>Browse the Stacks</h4>
         <p>A new homepage that lets you wander the shelves and discover, not just query a search box.</p></div>
       <div class="unit"><div class="ui"><svg class="ic ic-bookmark" viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></div>
         <h4>Shelf Actions</h4>
-        <p>Want to read, already read, add to a list — one tap from anywhere a book shows up.</p></div>
+        <p>Want to read, already read, add to a list. One tap from anywhere a book shows up.</p></div>
     </div>
     <aside class="notes">
-      Chapter one — meet readers where they are. Most of our traffic is on a phone, so this year we
+      Chapter one: meet readers where they are. Most of our traffic is on a phone, so this year we
       rebuilt the core experience mobile-first. A new search UX that's fast and legible on a small
-      screen. A new homepage — Browse the Stacks — that invites you to wander and discover instead of
+      screen. A new homepage, Browse the Stacks, that invites you to wander and discover instead of
       starting at an empty search box. And shelf actions: want-to-read, already-read, add-to-list, one
       tap from anywhere a book appears. Small taps, lower barrier.
     </aside>
   </section>
 
-  <!-- 5 · LENNY / LENDING (video demo) -->
+  <!-- 5 · FEATURE · NEW SEARCH UX (full-bleed screenshot) -->
+  <section class="bleed" data-background-color="#f1ede0">
+    <div class="bgshot" aria-hidden="true">
+      <img src="img/search-inside.png" alt="">
+    </div>
+    <div class="copy">
+      <p class="step">1 / 3 · Better UX</p>
+      <h2 style="margin-bottom:.25em;"><svg class="ic ic-search" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>New Search UX</h2>
+      <p class="sub" style="font-size:.7em; max-width:72ch; margin:0;">
+        One search box, two tabs: find a <em>book</em>, or search <em>inside</em> millions of them, with a
+        Readable Only toggle so every result is one you can open right now.</p>
+    </div>
+    <aside class="notes">
+      Here's the new search. It opens from anywhere on the site, and it's built around two tabs. Books
+      is what you'd expect. Inside books is the fun one: type a phrase like "it was the best of times" and
+      we find it on the actual page, in books about typography, not just Dickens. We default to the
+      exact phrase and give you one click to loosen it. Flip Readable Only and every hit is a book you
+      can open this second. And it's thumb-first: big targets, filters up top, results you can scan on a
+      phone.
+    </aside>
+  </section>
+
+  <!-- 6 · FEATURE · SHELF ACTIONS & LISTS (live popover demo) -->
+  <section data-background-color="#f1ede0">
+    <p class="step">1 / 3 · Better UX</p>
+    <h2><svg class="ic ic-list-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg>Shelf Actions &amp; Lists</h2>
+    <div class="two detail">
+      <div>
+        <p class="lede">Your shelves, your lists. Built in a couple of taps, and easy to share.</p>
+        <ul class="pts">
+          <li><b>One-tap shelves.</b> Want to read, reading, read, from anywhere a book appears.</li>
+          <li><b>Build lists.</b> Group books into a curated list on any topic.</li>
+          <li><b>Share them.</b> A list is a reading recommendation anyone can follow.</li>
+        </ul>
+      </div>
+      <div class="shelfdemo" role="img" aria-label="Shelf-actions popover on a book cover: a cursor taps the shelf button, the menu opens, and Currently Reading is selected">
+        <img class="sd-cover" src="img/secret-garden.jpg" alt="">
+        <span class="sd-chip"><svg class="ic ic-bookmark" viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><svg class="ic ic-book-open-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 7.5Q7 3 3.5 3.5A1.5 1.5 0 0 0 2 5v13a1.5 1.5 0 0 0 1.5 1.5Q7 19 11 22.5z"/><path d="M13 7.5Q17 3 20.5 3.5A1.5 1.5 0 0 1 22 5v13a1.5 1.5 0 0 1-1.5 1.5Q17 19 13 22.5z"/></svg></span>
+        <div class="sd-pop">
+          <div class="sd-title">The Secret Garden</div>
+          <div class="sd-row"><svg class="ic ic-bookmark" viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg><span>Want to Read</span><svg class="ic ic-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div class="sd-row sd-reading"><svg class="ic ic-book-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg><svg class="ic ic-book-open-filled" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 7.5Q7 3 3.5 3.5A1.5 1.5 0 0 0 2 5v13a1.5 1.5 0 0 0 1.5 1.5Q7 19 11 22.5z"/><path d="M13 7.5Q17 3 20.5 3.5A1.5 1.5 0 0 1 22 5v13a1.5 1.5 0 0 1-1.5 1.5Q17 19 13 22.5z"/></svg><span>Currently Reading</span><svg class="ic ic-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div class="sd-row"><svg class="ic ic-circle-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5 5.5-5.5"/></svg><span>Already Read</span><svg class="ic ic-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div class="sd-row"><svg class="ic ic-circle-pause" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="10" x2="10" y1="15" y2="9"/><line x1="14" x2="14" y1="15" y2="9"/></svg><span>Stopped Reading</span><svg class="ic ic-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div class="sd-rate"><svg class="ic ic-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg class="ic ic-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg class="ic ic-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg class="ic ic-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><svg class="ic ic-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg><span>Rate this book</span></div>
+          <div class="sd-row sd-list"><svg class="ic ic-list-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg><span>Add to list</span><svg class="ic ic-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></div>
+        </div>
+        <div class="sd-ring"></div>
+        <div class="sd-cursor"><svg viewBox="0 0 20 26" aria-hidden="true"><path d="M2 2v19l5-4.6 3.4 7.6 3.2-1.4-3.4-7.4h7z"/></svg></div>
+      </div>
+    </div>
+    <aside class="notes">
+      Shelf actions. This is the one-tap piece of the redesign: want to read, currently reading, already
+      read — straight from the cover, anywhere a book appears, no detour to the book page. The same
+      popover gets you into lists, so grouping books on any topic is a couple of taps too, and a list is
+      a recommendation other people can follow. Small taps, lower barrier — that's the whole idea of this
+      chapter.
+    </aside>
+  </section>
+
+  <!-- 7 · LENNY / LENDING (video demo) -->
   <section data-background-color="#f1ede0">
     <p class="step">2 / 3 · More ways to read</p>
     <h2><svg class="ic ic-book-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Lenny: A Trusted Book Provider</h2>
     <div class="two">
       <div>
-        <p class="lede">Find a book, connect to <em>Lenny for Libraries</em>, and start reading —
-          borrowing folded right into the reading flow.</p>
+        <p class="lede">Find a book, connect to <em>Lenny for Libraries</em>, and start reading.
+          Borrowing is folded right into the reading flow.</p>
         <ul class="pts">
           <li><b>Borrow in a tap.</b> Authorize once, then read instantly in the browser.</li>
           <li><b>A node you can trust.</b> Lenny Labs runs lending as a dependable provider.</li>
@@ -277,83 +388,79 @@
       </figure>
     </div>
     <aside class="notes">
-      Chapter two — earn trust. The best discovery in the world doesn't count if the borrow button is
+      Chapter two: earn trust. The best discovery in the world doesn't count if the borrow button is
       unreliable. Here's the whole flow on one book, Catboy: find it on Open Library, authorize Lenny
-      for Libraries once, and you're reading in the browser — a real loan with a real due date. That's
-      what being a trusted book provider means. Trust is what turns a visitor into someone who stays —
+      for Libraries once, and you're reading in the browser, with a real loan and a real due date. That's
+      what being a trusted book provider means. Trust is what turns a visitor into someone who stays,
       and someone who stays is who contributes.
     </aside>
   </section>
 
-  <!-- 6 · TOOLS FOR PARTICIPATION (overview) -->
+  <!-- 8 · TOOLS FOR PARTICIPATION (overview) -->
   <section data-background-color="#f1ede0">
     <p class="step">3 / 3 · More ways to participate</p>
     <h2><svg class="ic ic-handshake" viewBox="0 0 24 24" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>Tools for Participation</h2>
     <p class="sub" style="font-size:.76em; max-width:70ch; margin-top:-.1em;">
-      Five ways the community builds Open Library alongside us — each a small, low-friction way to
+      Four ways the community builds Open Library alongside us. Each is a small, low-friction way to
       contribute.</p>
-    <div class="feats">
+    <div class="feats four">
       <div class="feat"><span class="fi"><svg class="ic ic-share-2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg></span>
         <h4>Share Snippets</h4>
-        <p>Highlight a passage in BookReader and share it — every snippet flows into a global feed.</p></div>
+        <p>Highlight a passage in BookReader and share it. Every snippet flows into a global feed.</p></div>
       <div class="feat"><span class="fi"><svg class="ic ic-circle-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5 5.5-5.5"/></svg></span>
         <h4>Librarian <span class="tag">/tasks</span></h4>
-        <p>A dashboard of bite-size micro-tasks — anyone can pick one up and improve the catalog.</p></div>
+        <p>A dashboard of bite-size micro-tasks. Anyone can pick one up and improve the catalog.</p></div>
       <div class="feat"><span class="fi"><svg class="ic ic-globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
         <h4><span class="tag">/translate</span></h4>
-        <p>A community translations dashboard — help read Open Library in your language.</p></div>
-      <div class="feat"><span class="fi"><svg class="ic ic-list-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg></span>
-        <h4>Shelf Actions &amp; Lists</h4>
-        <p>Build and share curated book lists in a couple of taps.</p></div>
+        <p>A community translations dashboard. Help read Open Library in your language.</p></div>
       <div class="feat"><span class="fi"><svg class="ic ic-tag" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg></span>
         <h4>Tag Books</h4>
-        <p>Add genres and types in the UI — powering “Find a book by / with / that…”.</p></div>
+        <p>Add genres and types in the UI, powering “Find a book by / with / that…”.</p></div>
     </div>
     <aside class="notes">
-      Chapter three, the heart of it — hand people the tools. Five of them this year. I'll take each in
-      turn: share snippets, the librarian tasks dashboard, community translations, shelf actions and
-      lists, and UI book tagging. Each one is deliberately small. Low friction is the whole strategy.
+      Chapter three, the heart of it: hand people the tools. Four of them this year. I'll take each in
+      turn: share snippets, the librarian tasks dashboard, community translations, and UI book tagging. Each one is deliberately small. Low friction is the whole strategy.
     </aside>
   </section>
 
-  <!-- 7 · FEATURE · SHARE SNIPPETS -->
+  <!-- 9 · FEATURE · SHARE SNIPPETS -->
   <section data-background-color="#f1ede0">
-    <p class="step">Participate · 1 / 5</p>
+    <p class="step">Participate · 1 / 4</p>
     <h2><svg class="ic ic-share-2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></svg>Share Snippets</h2>
     <div class="two detail">
       <div>
-        <p class="lede">Found a passage worth sharing? Highlight it right in BookReader and post it —
-          no screenshots, no retyping.</p>
+        <p class="lede">Found a passage worth sharing? Highlight it right in BookReader and post it.
+          No screenshots, no retyping.</p>
         <ul class="pts">
           <li><b>Highlight → share.</b> Select text in the reader and get a clean, linkable snippet.</li>
           <li><b>A global feed.</b> Every shared snippet joins a public feed of what people are reading.</li>
-          <li><b>A discovery loop.</b> A snippet is an invitation — it sends new readers back to the book.</li>
+          <li><b>A discovery loop.</b> A snippet is an invitation that sends new readers back to the book.</li>
         </ul>
       </div>
       <div class="spotlight">
         <p class="sh">Shared to the feed</p>
         <p class="snip">Hi, I'm Olive. My cat Henry is my best friend. I saw a shooting star…</p>
-        <span class="attr">— Catboy · shared by @reader · <svg class="ic ic-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> 42</span>
+        <span class="attr">Catboy · shared by @reader · <svg class="ic ic-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> 42</span>
       </div>
     </div>
     <aside class="notes">
       Share snippets. If you've read something worth quoting, you shouldn't have to screenshot it.
-      Highlight the passage in BookReader, share it, and you get a clean linkable snippet — which also
+      Highlight the passage in BookReader, share it, and you get a clean linkable snippet, which also
       flows into a global feed of what the community is reading. That feed is a discovery engine: every
       snippet points back at the book it came from.
     </aside>
   </section>
 
-  <!-- 8 · FEATURE · LIBRARIAN /tasks -->
+  <!-- 10 · FEATURE · LIBRARIAN /tasks -->
   <section data-background-color="#f1ede0">
-    <p class="step">Participate · 2 / 5</p>
+    <p class="step">Participate · 2 / 4</p>
     <h2><svg class="ic ic-circle-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12.5 2.5 2.5 5.5-5.5"/></svg>Librarian <span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/tasks</span></h2>
     <div class="two detail">
       <div>
         <p class="lede">Improving the catalog used to mean knowing where to start. Now it's a to-do
           list anyone can pick from.</p>
         <ul class="pts">
-          <li><b>Bite-size micro-tasks.</b> Well-scoped jobs — fix a cover, merge an author, add a date.</li>
+          <li><b>Bite-size micro-tasks.</b> Well-scoped jobs: fix a cover, merge an author, add a date.</li>
           <li><b>No onboarding.</b> Grab a task, finish it in minutes, move on.</li>
           <li><b>Real impact.</b> Each one is a concrete improvement to a real record.</li>
         </ul>
@@ -371,19 +478,19 @@
     </div>
     <aside class="notes">
       The librarian tasks dashboard. The hardest part of contributing to a catalog is knowing where to
-      start — so we turned it into a to-do list. Bite-size, well-scoped micro-tasks: fix a cover, merge
+      start, so we turned it into a to-do list. Bite-size, well-scoped micro-tasks: fix a cover, merge
       a duplicate author, add a missing date. No onboarding, pick one up and finish it in minutes. Every
       task is a concrete improvement to a real record.
     </aside>
   </section>
 
-  <!-- 9 · FEATURE · /translate -->
+  <!-- 11 · FEATURE · /translate -->
   <section data-background-color="#f1ede0">
-    <p class="step">Participate · 3 / 5</p>
+    <p class="step">Participate · 3 / 4</p>
     <h2><svg class="ic ic-globe" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg><span style="font-family:'JetBrains Mono',monospace; color:var(--accent); font-size:.8em;">/translate</span></h2>
     <div class="two detail">
       <div>
-        <p class="lede">Open Library should read naturally in your language — and the community is what
+        <p class="lede">Open Library should read naturally in your language, and the community is what
           makes that happen.</p>
         <ul class="pts">
           <li><b>One dashboard.</b> A single place to translate and review interface strings.</li>
@@ -401,44 +508,20 @@
     </div>
     <aside class="notes">
       Community translations. Open Library should read naturally in your language, and the community
-      drives that through a single translations dashboard — translate a string, a language lead reviews
+      drives that through a single translations dashboard: translate a string, a language lead reviews
       it, and it ships. What you're watching on the right is the same book re-rendered in each
       language our community has translated. It's already live across roughly two dozen languages, and
       any reader can add theirs.
     </aside>
   </section>
 
-  <!-- 10 · FEATURE · SHELF ACTIONS & LISTS -->
+  <!-- 12 · FEATURE · TAG BOOKS -->
   <section data-background-color="#f1ede0">
-    <p class="step">Participate · 4 / 5</p>
-    <h2><svg class="ic ic-list-plus" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 12H3"/><path d="M16 6H3"/><path d="M16 18H3"/><path d="M18 9v6"/><path d="M21 12h-6"/></svg>Shelf Actions &amp; Lists</h2>
-    <div class="two detail">
-      <div>
-        <p class="lede">Your shelves, your lists — built in a couple of taps, and easy to share.</p>
-        <ul class="pts">
-          <li><b>One-tap shelves.</b> Want to read, reading, read — from anywhere a book appears.</li>
-          <li><b>Build lists.</b> Group books into a curated list on any topic.</li>
-          <li><b>Share them.</b> A list is a reading recommendation anyone can follow.</li>
-        </ul>
-      </div>
-      <figure class="shot" style="margin:0;">
-        <img src="img/shelf-popover.png" alt="Shelf-actions popover on a book cover: Want to Read, Currently Reading, Already Read, Stopped Reading, star rating, Add to list">
-      </figure>
-    </div>
-    <aside class="notes">
-      Shelf actions and lists. The simplest participation of all: one-tap shelves — want to read,
-      reading, read — from anywhere a book appears, and the ability to group books into curated lists on
-      any topic. A list isn't just organization, it's a recommendation other people can follow.
-    </aside>
-  </section>
-
-  <!-- 11 · FEATURE · TAG BOOKS -->
-  <section data-background-color="#f1ede0">
-    <p class="step">Participate · 5 / 5</p>
+    <p class="step">Participate · 4 / 4</p>
     <h2><svg class="ic ic-tag" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>Tag Books</h2>
     <div class="two detail">
       <div>
-        <p class="lede">Add genres and types right in the UI — and unlock a whole new way to find
+        <p class="lede">Add genres and types right in the UI, and unlock a whole new way to find
           books.</p>
         <ul class="pts">
           <li><b>Tag in the UI.</b> Readers add genres and types, no special tools needed.</li>
@@ -456,14 +539,14 @@
       </div>
     </div>
     <aside class="notes">
-      Tagging books. Readers can add genres and types right in the UI — no special tooling — and those
+      Tagging books. Readers can add genres and types right in the UI, no special tooling needed, and those
       tags power a whole new way to find books. Find a book that's a graphic novel, with a cat, by a
       debut author. Every tag someone adds makes the next person's search smarter. That's the compounding
       effect, and it comes from participation.
     </aside>
   </section>
 
-  <!-- 12 · CLOSE -->
+  <!-- 13 · CLOSE -->
   <section data-background-color="#f1ede0">
     <h1 style="font-size:1.7em;"><svg class="ic ic-book-open-text" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v16"/><path d="M16 13h2"/><path d="M16 9h2"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/><path d="M6 13h2"/><path d="M6 9h2"/></svg>Everyone's Open Library.</h1>
     <p class="sub" style="font-size:.82em; max-width:56ch; margin-top:.6em;">
@@ -476,7 +559,7 @@
       <span class="lab">open source</span><a href="https://github.com/internetarchive/openlibrary">github.com/internetarchive/openlibrary</a></p>
     <aside class="notes">
       The point of all of it: it's everyone's Open Library. Read a book, share a snippet, tag a genre,
-      translate a string, pick up a task — every one is a real contribution now, and none takes more
+      translate a string, pick up a task. Every one is a real contribution now, and none takes more
       than a minute. Open Library is open source and open to everyone. Come build it with us. Thank you.
     </aside>
   </section>
@@ -660,6 +743,47 @@
     show(0, false);
     Reveal.on('ready', () => { if (Reveal.getCurrentSlide() === sec) start(); });
     Reveal.on('slidechanged', e => { if (e.currentSlide === sec) start(); else if (e.previousSlide === sec) stop(); });
+  })();
+</script>
+<script>
+  // Slide 6 — shelf-actions popover demo: a scripted cursor taps the chip, the menu opens, Currently Reading is picked.
+  (function () {
+    const demo = document.querySelector('.shelfdemo'); if (!demo) return;
+    const sec = demo.closest('section'), cursor = demo.querySelector('.sd-cursor'), ring = demo.querySelector('.sd-ring');
+    const chip = demo.querySelector('.sd-chip'), reading = demo.querySelector('.sd-reading');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timers = [];
+    const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+    // Stage-space point (fx, fy = fraction across the target) — reveal scales the slide, so measure the ratio.
+    function point(el, fx, fy) {
+      const r = demo.getBoundingClientRect(), k = 620 / r.width, t = el.getBoundingClientRect();
+      return { x: (t.left - r.left) * k + t.width * k * fx, y: (t.top - r.top) * k + t.height * k * fy };
+    }
+    function moveTo(el, fx, fy) { const p = point(el, fx, fy); cursor.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px)'; return p; }
+    function click(el, fx, fy) {
+      const p = point(el, fx, fy);
+      demo.classList.add('press'); at(130, () => demo.classList.remove('press'));
+      ring.style.left = p.x + 'px'; ring.style.top = p.y + 'px'; ring.classList.remove('go'); void ring.offsetWidth; ring.classList.add('go');
+    }
+    function reset() {
+      timers.forEach(clearTimeout); timers = [];
+      demo.classList.remove('open', 'reading', 'press');
+      demo.querySelectorAll('.sd-row').forEach(r => r.classList.remove('active', 'hover'));
+      cursor.style.transition = 'none'; cursor.style.transform = 'translate(640px,480px)'; void cursor.offsetWidth; cursor.style.transition = '';
+    }
+    function finish() { demo.classList.add('open', 'reading'); reading.classList.add('active'); }
+    function play() {
+      reset();
+      if (reduced) { finish(); return; }
+      at(400,  () => moveTo(chip, .5, .5));
+      at(1250, () => click(chip, .5, .5));
+      at(1400, () => demo.classList.add('open'));
+      at(2200, () => { moveTo(reading, .42, .55); reading.classList.add('hover'); });
+      at(3050, () => click(reading, .42, .55));
+      at(3200, () => { reading.classList.remove('hover'); reading.classList.add('active'); demo.classList.add('reading'); });
+    }
+    Reveal.on('ready', e => { if (e.currentSlide === sec) play(); });
+    Reveal.on('slidechanged', e => { if (e.currentSlide === sec) play(); else if (e.previousSlide === sec) reset(); });
   })();
 </script>
 </body>
